@@ -20,7 +20,7 @@ const App = () => {
       {/* shorthand syntax to determine if main div is visible */}
       {mainVisibility && 
         <div className="main">
-          <p>Pick a toy:</p>
+          <h1>Pick a toy:</h1>
           {/* Showcases the toys that are in the playground to play with */}
           <div className="playgroundSet">
             <button onClick={() => {setVisibility(colorCVisibility, setColorCVisibility)}}>
@@ -46,13 +46,13 @@ const App = () => {
 
 // ColorChanger component: It will change the background color depending on the color you pick
 const ColorChanger = ({ color, visFunction, setVisibility }) => {
+  // Store the colors in an array
+  const colors = ["#ff0000", "#00ff00", "#0000ff"]
   return (
     <div className="colorC">
-      <ColorButton color="#ff0000" />
-      <ColorButton color="#00ff00" />
-      <ColorButton color="#0000ff" />
-      {/* Return to main button */}
-      <div className="returnButton"><button onClick={() => {setVisibility(true, visFunction)}}>Return to Playground</button></div>
+      {colors.map((c) => <ColorButton color={c} />)}
+      {/* Return to main button, reset the background */}
+      <div className="returnButton"><button onClick={() => {setVisibility(true, visFunction); document.body.style.background=""}}>Return to Playground</button></div>
     </div>
   )
 }
@@ -61,7 +61,12 @@ const ColorChanger = ({ color, visFunction, setVisibility }) => {
 const ColorButton = ({ color }) => {
   const fadedColor = fadeColor(color);
   return (
-    <button className="colorButton" style={{'backgroundColor' : color}} onClick={() => {document.body.style.background = fadedColor; console.log(fadedColor + " " + color);}}>&nbsp;</button>
+    <button 
+      className="colorButton" 
+      style={{'backgroundColor' : color}} 
+      onClick={() => {styleTransition(fadedColor)}}>
+        &nbsp;
+    </button>
   )
 }
 
@@ -74,11 +79,6 @@ const fadeColor = (color) => {
   let colorR = parseInt("0x" + color[0] + color[1]);
   let colorG = parseInt("0x" + color[2] + color[3]);
   let colorB = parseInt("0x" + color[4] + color[5]);
-  // // Reduce each decimal value to lighten the color, but don't go over 255
-  // let change = 32;
-  // colorR = (colorR + change > 255 ? 255 : colorR + change);
-  // colorG = (colorG + change > 255 ? 255 : colorG + change);
-  // colorB = (colorB + change > 255 ? 255 : colorB + change);
   // Convert color to rgba to take advantage of alpha for fading
   color = `rgba(${colorR}, ${colorG}, ${colorB}, 0.6)`;
 
@@ -94,6 +94,12 @@ const TextDisplay = ({ text, visFunction, setVisibility }) => {
       <div className="returnButton"><button onClick={() => {setVisibility(true, visFunction)}}>Return to Playground</button></div>
     </div>
   )
+}
+
+// styleTransition function that handles changing the style of the body when switching apps
+const styleTransition = (color) => {
+  if (typeof color !== "undefined") document.body.style.background = color;
+  document.body.style.transition = "ease-in-out 0.7s";
 }
 
 export default App;
