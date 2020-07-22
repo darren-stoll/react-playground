@@ -7,7 +7,7 @@ const App = () => {
   // useState variables that are used to set visibility on main + toys
   const [mainVisibility, setMainVisibility] = React.useState(true);
   const [colorCVisibility, setColorCVisibility] = React.useState(false);
-  const [textDisplayVisibility, setTextDisplayVisibility] = React.useState(false);
+  const [optionToggleVisibility, setOptionToggleVisibility] = React.useState(false);
 
   // Toggle function that sets the main div visibility to false and the associated button component's div to true
   const setVisibility = (compVis, compVisFunction) => {
@@ -26,26 +26,22 @@ const App = () => {
             <button onClick={() => {setVisibility(colorCVisibility, setColorCVisibility)}}>
               Color Changer
             </button>
-            <button onClick={() => {setVisibility(textDisplayVisibility, setTextDisplayVisibility)}}>
-              Text Display
+            <button onClick={() => {setVisibility(optionToggleVisibility, setOptionToggleVisibility)}}>
+              Option Toggle
             </button>
           </div>
         </div>
       }
       {/* shorthand syntax to determine if any component is visible */}
-      {colorCVisibility && <ColorChanger color="red" visFunction={setColorCVisibility} setVisibility={setVisibility} />}
-      {textDisplayVisibility && <TextDisplay text="Test2" visFunction={setTextDisplayVisibility} setVisibility={setVisibility} />}
-
-      {/* Display a "return to main" link if main is not active */}
-      {!mainVisibility && <div></div>}
-
+      {colorCVisibility && <ColorChanger visFunction={setColorCVisibility} setVisibility={setVisibility} />}
+      {optionToggleVisibility && <OptionToggle text="Test2" visFunction={setOptionToggleVisibility} setVisibility={setVisibility} />}
     </div>
   );
 }
 /* APPLICATION END */
 
 // ColorChanger component: It will change the background color depending on the color you pick
-const ColorChanger = ({ color, visFunction, setVisibility }) => {
+const ColorChanger = ({ visFunction, setVisibility }) => {
   // Store the colors in an array
   const colors = ["#ff0000", "#00ff00", "#0000ff"]
   return (
@@ -86,9 +82,9 @@ const fadeColor = (color) => {
 }
 
 // TextDisplay component: It will log text onto the page depending on what you type in to the textbox
-const TextDisplay = ({ text, visFunction, setVisibility }) => {
+const OptionToggle = ({ text, visFunction, setVisibility }) => {
   return (
-    <div className="textD">
+    <div className="optionT">
       <p>{text}</p>
       {/* Return to main button */}
       <div className="returnButton"><button onClick={() => {setVisibility(true, visFunction)}}>Return to Playground</button></div>
