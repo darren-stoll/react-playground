@@ -83,9 +83,13 @@ const fadeColor = (color) => {
 
 // TextDisplay component: It will log text onto the page depending on what you type in to the textbox
 const OptionToggle = ({ text, visFunction, setVisibility }) => {
+
+
   return (
     <div className="optionT">
-      <p>{text}</p>
+      <button>Option 1</button>
+      <button>Option 2</button>
+      <button>Option 3</button>
       {/* Return to main button */}
       <div className="returnButton"><button onClick={() => {setVisibility(true, visFunction)}}>Return to Playground</button></div>
     </div>
