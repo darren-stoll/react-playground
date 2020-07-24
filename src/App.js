@@ -64,7 +64,7 @@ const ColorButton = ({ color }) => {
         &nbsp;
     </button>
   )
-}
+} 
 
 // fadeColor function
 const fadeColor = (color) => {
@@ -81,20 +81,29 @@ const fadeColor = (color) => {
   return color;
 }
 
-// TextDisplay component: It will log text onto the page depending on what you type in to the textbox
-const OptionToggle = ({ text, visFunction, setVisibility }) => {
+// Function for setting button that you clicked on to red and all other buttons to black
+const changeOptionColor = (objectID) => {
+  // Retrieve HTMLCollection collection
+  let optionArray = document.getElementsByClassName('option');
+  // Convert to Array.prototype and log element
+  [].forEach.call(optionArray, element => element.style.color='black');
+  // Set the one button's color that you clicked on to red
+  document.getElementById(objectID).style.color = 'red';
+}
 
-
+// OptionToggle component: It will change the color of the button that you clicked on and bring all others back to default
+const OptionToggle = ({ visFunction, setVisibility }) => {
   return (
     <div className="optionT">
-      <button>Option 1</button>
-      <button>Option 2</button>
-      <button>Option 3</button>
+      <button id="option1" className="option" type="button" onClick={() => changeOptionColor('option1')}>Option1</button>
+      <button id="option2" className="option" type="button" onClick={() => changeOptionColor('option2')}>Option2</button>
+      <button id="option3" className="option" type="button" onClick={() => changeOptionColor('option3')}>Option3</button>
       {/* Return to main button */}
       <div className="returnButton"><button onClick={() => {setVisibility(true, visFunction)}}>Return to Playground</button></div>
     </div>
   )
 }
+
 
 // styleTransition function that handles changing the style of the body when switching apps
 const styleTransition = (color) => {
